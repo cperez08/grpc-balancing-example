@@ -1,0 +1,30 @@
+FROM golang:1.15-alpine as builder
+
+RUN apk update \
+    && apk upgrade \
+    && apk add --no-cache git bash make \
+    && mkdir -p /server
+
+WORKDIR /server
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
+ADD . .
+
+RUN go build -o postserver ./cmd/server/main.go
+
+## FINAL IMAGE
+FROM alpine as app
+
+WORKDIR /
+
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=builder /server/postserver .
+
+RUN chmod +x ./postserver
+
+EXPOSE 50051
+
+CMD ["/postserver"]

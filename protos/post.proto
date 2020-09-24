@@ -1,0 +1,15 @@
+syntax = "proto3";
+package post;
+
+message Post {
+  uint64 post_id = 1; 
+  string tittle = 2;
+  string description = 3;
+  repeated string tags = 4;
+  string author = 5;
+  string created_at = 6;
+}
+
+service PostService {
+  rpc CreatePost (Post) returns (Post){}
+}

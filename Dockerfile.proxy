@@ -1,0 +1,2 @@
+FROM cperez08/h2-proxy
+COPY h2-proxy.yaml /etc/h2-proxy/config.yaml

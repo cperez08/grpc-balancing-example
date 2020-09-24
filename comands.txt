@@ -1,0 +1,13 @@
+kubectl create deploy demo1 --image demo1 --dry-run=client -o yaml 
+
+kubectl create service clusterip svc-demo1 --tcp=8080:8080 --dry-run=client -o yaml
+
+kubectl create configmap client-demo1-config --from-literal=POST_SVC_ADDRESS=svc-demo1.demo1.svc.cluster.local
+
+eval $(minikube docker-env)
+
+
+minikube service svc-client -n demo1
+
+
+kubectl scale --replicas=3 deploy/server-demo2 -n demo2

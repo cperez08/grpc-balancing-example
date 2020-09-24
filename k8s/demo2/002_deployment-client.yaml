@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: demo2
+  labels:
+    app: client-demo2
+  name: client-demo2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client-demo2
+  template:
+    metadata:
+      labels:
+        app: client-demo2
+    spec:
+      containers:
+      - image: demo2:latest
+        name: client-demo2
+        imagePullPolicy: Never
+        envFrom:
+        - configMapRef:
+            name: client-demo2-config

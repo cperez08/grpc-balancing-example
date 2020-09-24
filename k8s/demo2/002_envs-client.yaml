@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  POST_SVC_ADDRESS: svc-server.demo2.svc.cluster.local:50051
+kind: ConfigMap
+metadata:
+  name: client-demo2-config
+  namespace: demo2
